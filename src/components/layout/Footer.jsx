@@ -1,57 +1,70 @@
 import { Link } from 'react-router-dom'
 import { FaInstagram, FaFacebook, FaTiktok, FaWhatsapp } from 'react-icons/fa'
-import { FiMail, FiMapPin, FiPhone } from 'react-icons/fi'
+import { FiMail, FiMapPin } from 'react-icons/fi'
+import { motion } from 'framer-motion'
 
 export default function Footer() {
   return (
-    <footer className="bg-blue-gradient text-white">
-      {/* Main footer */}
-      <div className="container mx-auto px-4 pt-16 pb-8">
+    <footer className="bg-dark border-t border-border">
+      {/* Top footer */}
+      <div className="container mx-auto px-4 pt-16 pb-10">
         <div className="grid md:grid-cols-4 gap-10 mb-12">
           {/* Brand */}
           <div className="md:col-span-2">
-            <div className="flex items-center gap-3 mb-4">
+            <div className="flex items-center gap-3 mb-5">
               <img src="/logo.png" alt="ChezAntaBada" className="h-14 w-auto"
                    onError={e => e.target.style.display='none'} />
-              <div>
-                <h3 className="font-display text-xl font-bold text-white">ChezAntaBada</h3>
-                <p className="text-gold-300 text-xs tracking-[0.25em] font-medium">HIJAB FASHION</p>
-              </div>
             </div>
-            <p className="text-white/70 text-sm leading-relaxed max-w-xs mb-6">
+            <p className="text-muted text-sm leading-relaxed max-w-xs mb-6">
               Des hijabs et foulards d'exception, pensés pour la femme élégante et moderne.
-              Qualité premium, livraison rapide au Sénégal et partout en Afrique.
+              Qualité premium, livraison rapide partout en Afrique.
             </p>
-            {/* Social */}
+            <div className="flex items-center gap-2 text-sm text-muted mb-2">
+              <FiMapPin size={14} className="text-gold-400" />
+              <span>Dakar, Sénégal</span>
+            </div>
+            <div className="flex items-center gap-2 text-sm text-muted mb-6">
+              <FiMail size={14} className="text-gold-400" />
+              <span>contact@chezantabada.com</span>
+            </div>
+            {/* Social icons */}
             <div className="flex gap-3">
               {[
-                { Icon: FaInstagram, href: '#',     label: 'Instagram' },
-                { Icon: FaFacebook,  href: '#',     label: 'Facebook'  },
-                { Icon: FaTiktok,    href: '#',     label: 'TikTok'    },
+                { Icon: FaInstagram, href: '#',   label: 'Instagram' },
+                { Icon: FaFacebook,  href: '#',   label: 'Facebook'  },
+                { Icon: FaTiktok,    href: '#',   label: 'TikTok'    },
                 { Icon: FaWhatsapp,  href: `https://wa.me/${import.meta.env.VITE_WHATSAPP_NUMBER}`, label: 'WhatsApp' },
               ].map(({ Icon, href, label }, i) => (
-                <a key={i} href={href} target="_blank" rel="noopener noreferrer"
+                <motion.a key={i} href={href} target="_blank" rel="noopener noreferrer"
                    aria-label={label}
-                   className="w-9 h-9 bg-white/10 border border-white/20 rounded-full flex items-center
-                              justify-center hover:bg-gold-500 hover:border-gold-500 transition-all duration-200">
-                  <Icon size={15} />
-                </a>
+                   whileHover={{ y: -2, scale: 1.1 }}
+                   className="w-10 h-10 bg-card border border-border rounded-full flex items-center
+                              justify-center text-muted hover:text-gold-400 hover:border-gold-500/50
+                              hover:bg-gold-500/10 transition-all duration-200">
+                  <Icon size={16} />
+                </motion.a>
               ))}
             </div>
           </div>
 
           {/* Boutique */}
           <div>
-            <h4 className="font-semibold text-gold-300 mb-4 uppercase tracking-wider text-xs">Boutique</h4>
-            <ul className="space-y-3 text-sm text-white/70">
+            <h4 className="font-semibold text-gold-400 mb-5 uppercase tracking-wider text-xs flex items-center gap-2">
+              <span className="w-4 h-px bg-gold-500 inline-block" /> Boutique
+            </h4>
+            <ul className="space-y-3">
               {[
-                { to: '/boutique',              label: 'Tous les hijabs'   },
-                { to: '/boutique',              label: 'Collection Soie'   },
-                { to: '/boutique',              label: 'Collection Coton'  },
-                { to: '/boutique?featured=true',label: 'Pièces phares'     },
+                { to: '/boutique',               label: 'Tous les hijabs'   },
+                { to: '/boutique',               label: 'Collection Soie'   },
+                { to: '/boutique',               label: 'Collection Coton'  },
+                { to: '/boutique?featured=true', label: 'Pièces phares'     },
+                { to: '/boutique',               label: 'Nouveautés'        },
               ].map(({ to, label }) => (
                 <li key={label}>
-                  <Link to={to} className="hover:text-gold-300 transition-colors hover:pl-1 duration-200 block">
+                  <Link to={to}
+                        className="text-sm text-muted hover:text-gold-400 transition-colors
+                                   flex items-center gap-2 group">
+                    <span className="w-0 group-hover:w-2 h-px bg-gold-400 transition-all duration-200" />
                     {label}
                   </Link>
                 </li>
@@ -61,16 +74,22 @@ export default function Footer() {
 
           {/* Aide */}
           <div>
-            <h4 className="font-semibold text-gold-300 mb-4 uppercase tracking-wider text-xs">Aide</h4>
-            <ul className="space-y-3 text-sm text-white/70">
+            <h4 className="font-semibold text-gold-400 mb-5 uppercase tracking-wider text-xs flex items-center gap-2">
+              <span className="w-4 h-px bg-gold-500 inline-block" /> Aide
+            </h4>
+            <ul className="space-y-3">
               {[
                 { to: '/connexion',  label: 'Mon compte'          },
                 { to: '/commandes',  label: 'Mes commandes'       },
                 { to: '#',           label: 'Livraison & retours' },
                 { to: '#',           label: 'Contact'             },
+                { to: '#',           label: 'FAQ'                 },
               ].map(({ to, label }) => (
                 <li key={label}>
-                  <Link to={to} className="hover:text-gold-300 transition-colors hover:pl-1 duration-200 block">
+                  <Link to={to}
+                        className="text-sm text-muted hover:text-gold-400 transition-colors
+                                   flex items-center gap-2 group">
+                    <span className="w-0 group-hover:w-2 h-px bg-gold-400 transition-all duration-200" />
                     {label}
                   </Link>
                 </li>
@@ -79,12 +98,15 @@ export default function Footer() {
           </div>
         </div>
 
+        {/* Divider */}
+        <div className="divider-gold mb-6" />
+
         {/* Bottom bar */}
-        <div className="border-t border-white/10 pt-6 flex flex-col md:flex-row justify-between
-                        items-center gap-4 text-xs text-white/40">
-          <p>© 2025 ChezAntaBada · Tous droits réservés</p>
+        <div className="flex flex-col md:flex-row justify-between items-center gap-4 text-xs text-subtle">
+          <p>© 2025 ChezAntaBada · Tous droits réservés · Dakar, Sénégal</p>
           <p className="flex items-center gap-2">
-            <span>🔒 Paiements sécurisés Stripe SSL</span>
+            <span className="w-2 h-2 rounded-full bg-green-400 animate-pulse inline-block" />
+            Paiements sécurisés Stripe SSL 256-bit
           </p>
         </div>
       </div>
