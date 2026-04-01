@@ -1,0 +1,28 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 80" width="200" height="80">
+  <defs>
+    <linearGradient id="hijabGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#60a5fa;stop-opacity:1" />
+      <stop offset="50%" style="stop-color:#2563EB;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#1e3a8a;stop-opacity:1" />
+    </linearGradient>
+    <linearGradient id="goldGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" style="stop-color:#C9A84C;stop-opacity:1" />
+      <stop offset="50%" style="stop-color:#e8d5a3;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#C9A84C;stop-opacity:1" />
+    </linearGradient>
+    <filter id="glow">
+      <feGaussianBlur stdDeviation="2" result="coloredBlur"/>
+      <feMerge><feMergeNode in="coloredBlur"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+  </defs>
+  <!-- Hijab icon -->
+  <g filter="url(#glow)" transform="translate(10,5)">
+    <ellipse cx="30" cy="20" rx="14" ry="16" fill="url(#hijabGrad)" opacity="0.9"/>
+    <path d="M16,30 Q20,45 30,48 Q40,45 44,30 Q38,38 30,38 Q22,38 16,30Z" fill="url(#hijabGrad)"/>
+    <circle cx="30" cy="18" r="10" fill="#000" opacity="0.3"/>
+    <circle cx="30" cy="17" r="8" fill="#0a0f2e" opacity="0.5"/>
+  </g>
+  <!-- Text -->
+  <text x="65" y="32" font-family="Georgia, serif" font-size="18" font-weight="bold" fill="url(#goldGrad)">ChezAntaBada</text>
+  <text x="66" y="50" font-family="Arial, sans-serif" font-size="9" fill="#C9A84C" letter-spacing="3">HIJAB FASHION</text>
+</svg>

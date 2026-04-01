@@ -4,6 +4,18 @@ export default {
   theme: {
     extend: {
       colors: {
+        blue: {
+          50:  '#eff6ff',
+          100: '#dbeafe',
+          200: '#bfdbfe',
+          300: '#93c5fd',
+          400: '#60a5fa',
+          500: '#2563EB',
+          600: '#1d4ed8',
+          700: '#1e40af',
+          800: '#1e3a8a',
+          900: '#1e2d6b',
+        },
         gold: {
           50:  '#fdfbf0',
           100: '#faf3d1',
@@ -16,10 +28,11 @@ export default {
           800: '#5a4018',
           900: '#3c2a0e',
         },
-        night: '#0a0a0a',
-        ink:   '#111111',
-        cream: '#faf8f4',
-        silk:  '#f0ebe3',
+        night:    '#000000',
+        ink:      '#111111',
+        cream:    '#f0f4ff',
+        silk:     '#e8eeff',
+        sapphire: '#2563EB',
       },
       fontFamily: {
         display: ['"Playfair Display"', 'Georgia', 'serif'],
@@ -27,13 +40,16 @@ export default {
         script:  ['"Dancing Script"', 'cursive'],
       },
       backgroundImage: {
-        'gold-gradient': 'linear-gradient(135deg, #C9A84C 0%, #e8d5a3 50%, #C9A84C 100%)',
-        'dark-gradient': 'linear-gradient(180deg, #0a0a0a 0%, #1a1a2e 100%)',
+        'gold-gradient':  'linear-gradient(135deg, #C9A84C 0%, #e8d5a3 50%, #C9A84C 100%)',
+        'blue-gradient':  'linear-gradient(135deg, #1e3a8a 0%, #2563EB 50%, #60a5fa 100%)',
+        'dark-gradient':  'linear-gradient(180deg, #000000 0%, #0a0f2e 100%)',
+        'hero-gradient':  'linear-gradient(135deg, #000000 0%, #0a1628 60%, #1e3a8a 100%)',
       },
       animation: {
-        'fade-up': 'fadeUp 0.6s ease-out forwards',
-        'shimmer': 'shimmer 2s infinite',
-        'float':   'float 3s ease-in-out infinite',
+        'fade-up':  'fadeUp 0.6s ease-out forwards',
+        'shimmer':  'shimmer 2s infinite',
+        'float':    'float 3s ease-in-out infinite',
+        'glow':     'glow 2s ease-in-out infinite alternate',
       },
       keyframes: {
         fadeUp: {
@@ -47,6 +63,10 @@ export default {
         float: {
           '0%, 100%': { transform: 'translateY(0)' },
           '50%':      { transform: 'translateY(-10px)' },
+        },
+        glow: {
+          '0%':   { boxShadow: '0 0 10px #2563EB40' },
+          '100%': { boxShadow: '0 0 30px #2563EB80, 0 0 60px #2563EB40' },
         },
       },
     },

@@ -27,23 +27,28 @@ export default function Navbar() {
   return (
     <motion.header
       className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
-        scrolled ? 'bg-white/95 backdrop-blur-md shadow-md py-3' : 'bg-transparent py-5'
+        scrolled
+          ? 'bg-white/95 backdrop-blur-md shadow-md py-3'
+          : 'bg-black/20 backdrop-blur-sm py-5'
       }`}
     >
       <div className="container mx-auto px-4 flex items-center justify-between">
         {/* Logo */}
-        <Link to="/" className="flex items-center">
-          <span className="font-display text-2xl font-bold text-gold-500">ChezAntaBada</span>
+        <Link to="/" className="flex items-center gap-2">
+          <img src="/logo.svg" alt="ChezAntaBada" className="h-10 w-auto" onError={e => {
+            e.target.style.display = 'none'
+            e.target.nextSibling.style.display = 'block'
+          }} />
+          <span className="hidden font-display text-xl font-bold logo-text">ChezAntaBada</span>
         </Link>
 
         {/* Nav desktop */}
         <nav className="hidden md:flex items-center gap-8">
           {NAV_LINKS.map(({ to, label }) => (
-            <NavLink
-              key={to} to={to}
+            <NavLink key={to} to={to}
               className={({ isActive }) =>
                 `font-medium text-sm tracking-wide transition-colors ${
-                  isActive ? 'text-gold-500' : scrolled ? 'text-ink hover:text-gold-500' : 'text-white hover:text-gold-300'
+                  isActive ? 'text-blue-500' : scrolled ? 'text-ink hover:text-blue-500' : 'text-white hover:text-blue-300'
                 }`
               }
             >
@@ -54,12 +59,12 @@ export default function Navbar() {
 
         {/* Actions */}
         <div className="flex items-center gap-4">
-          <Link to="/panier" className={`relative transition-colors ${scrolled ? 'text-ink hover:text-gold-500' : 'text-white hover:text-gold-300'}`}>
+          <Link to="/panier" className={`relative transition-colors ${scrolled ? 'text-ink hover:text-blue-500' : 'text-white hover:text-blue-300'}`}>
             <FiShoppingBag size={22} />
             {count > 0 && (
               <motion.span
                 initial={{ scale: 0 }} animate={{ scale: 1 }}
-                className="absolute -top-2 -right-2 bg-gold-500 text-white
+                className="absolute -top-2 -right-2 bg-blue-500 text-white
                            text-xs rounded-full w-5 h-5 flex items-center justify-center font-bold"
               >
                 {count}
@@ -69,10 +74,8 @@ export default function Navbar() {
 
           {user ? (
             <div className="relative">
-              <button
-                onClick={() => setDropOpen(!dropOpen)}
-                className={`transition-colors ${scrolled ? 'text-ink hover:text-gold-500' : 'text-white hover:text-gold-300'}`}
-              >
+              <button onClick={() => setDropOpen(!dropOpen)}
+                      className={`transition-colors ${scrolled ? 'text-ink hover:text-blue-500' : 'text-white hover:text-blue-300'}`}>
                 <FiUser size={22} />
               </button>
               <AnimatePresence>
@@ -89,13 +92,11 @@ export default function Navbar() {
                           className="block px-4 py-2.5 text-sm hover:bg-cream rounded-xl">Mes commandes</Link>
                     {user.role === 'admin' && (
                       <Link to="/admin" onClick={() => setDropOpen(false)}
-                            className="block px-4 py-2.5 text-sm text-gold-500 font-medium hover:bg-cream rounded-xl">Dashboard admin</Link>
+                            className="block px-4 py-2.5 text-sm text-blue-500 font-medium hover:bg-cream rounded-xl">Dashboard admin</Link>
                     )}
                     <hr className="my-1 border-gray-100" />
-                    <button
-                      onClick={() => { logout(); setDropOpen(false); navigate('/') }}
-                      className="flex items-center gap-2 w-full px-4 py-2.5 text-sm text-red-500 hover:bg-red-50 rounded-xl"
-                    >
+                    <button onClick={() => { logout(); setDropOpen(false); navigate('/') }}
+                            className="flex items-center gap-2 w-full px-4 py-2.5 text-sm text-red-500 hover:bg-red-50 rounded-xl">
                       <FiLogOut size={14} /> Déconnexion
                     </button>
                   </motion.div>
@@ -103,7 +104,7 @@ export default function Navbar() {
               </AnimatePresence>
             </div>
           ) : (
-            <Link to="/connexion" className={`transition-colors ${scrolled ? 'text-ink hover:text-gold-500' : 'text-white hover:text-gold-300'}`}>
+            <Link to="/connexion" className={`transition-colors ${scrolled ? 'text-ink hover:text-blue-500' : 'text-white hover:text-blue-300'}`}>
               <FiUser size={22} />
             </Link>
           )}
@@ -128,22 +129,18 @@ export default function Navbar() {
           >
             {NAV_LINKS.map(({ to, label }) => (
               <Link key={to} to={to} onClick={() => setMenuOpen(false)}
-                    className="font-medium text-ink hover:text-gold-500 py-2 border-b border-silk">
+                    className="font-medium text-ink hover:text-blue-500 py-2 border-b border-silk">
                 {label}
               </Link>
             ))}
             {user ? (
               <>
-                <Link to="/profil" onClick={() => setMenuOpen(false)}
-                      className="py-2 border-b border-silk text-sm">Mon profil</Link>
-                <Link to="/commandes" onClick={() => setMenuOpen(false)}
-                      className="py-2 border-b border-silk text-sm">Mes commandes</Link>
-                <button onClick={() => { logout(); setMenuOpen(false); navigate('/') }}
-                        className="text-left py-2 text-red-500 text-sm">Déconnexion</button>
+                <Link to="/profil" onClick={() => setMenuOpen(false)} className="py-2 border-b border-silk text-sm">Mon profil</Link>
+                <Link to="/commandes" onClick={() => setMenuOpen(false)} className="py-2 border-b border-silk text-sm">Mes commandes</Link>
+                <button onClick={() => { logout(); setMenuOpen(false); navigate('/') }} className="text-left py-2 text-red-500 text-sm">Déconnexion</button>
               </>
             ) : (
-              <Link to="/connexion" onClick={() => setMenuOpen(false)}
-                    className="py-2 text-gold-500 font-medium text-sm">Se connecter</Link>
+              <Link to="/connexion" onClick={() => setMenuOpen(false)} className="py-2 text-blue-500 font-medium text-sm">Se connecter</Link>
             )}
           </motion.div>
         )}
