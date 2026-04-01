@@ -4,12 +4,19 @@ import { Helmet } from 'react-helmet-async'
 import { useQuery } from '@tanstack/react-query'
 import { productService } from '@/services/productService'
 import ProductCard from '@/components/ui/ProductCard'
-import { FiArrowRight, FiStar } from 'react-icons/fi'
+import { FiArrowRight, FiStar, FiTruck, FiAward, FiHeart, FiShield } from 'react-icons/fi'
 
 const TESTIMONIALS = [
-  { name: 'Fatou D.',    text: 'Qualité exceptionnelle, le foulard est encore plus beau en vrai !', stars: 5 },
-  { name: 'Mariama B.',  text: 'Livraison super rapide et emballage magnifique. Je recommande !',   stars: 5 },
-  { name: 'Aminata S.',  text: 'Le service client est au top, je suis conquise par ChezAntaBada.',  stars: 5 },
+  { name: 'Fatou D.',   text: 'Qualité exceptionnelle, le hijab est encore plus beau en vrai !', stars: 5 },
+  { name: 'Mariama B.', text: 'Livraison super rapide et emballage magnifique. Je recommande !',  stars: 5 },
+  { name: 'Aminata S.', text: 'Service client au top, je suis conquise par ChezAntaBada !',       stars: 5 },
+]
+
+const VALUES = [
+  { icon: FiAward,  label: 'Qualité premium',     desc: 'Matières naturelles sélectionnées' },
+  { icon: FiTruck,  label: 'Livraison rapide',     desc: 'Partout au Sénégal & Afrique'     },
+  { icon: FiHeart,  label: 'Fait avec amour',      desc: 'Collections exclusives artisanales'},
+  { icon: FiShield, label: 'Paiement sécurisé',    desc: 'Stripe SSL certifié'               },
 ]
 
 export default function Home() {
@@ -22,89 +29,98 @@ export default function Home() {
     <>
       <Helmet>
         <title>ChezAntaBada — Hijab Fashion Haut de Gamme</title>
-        <meta name="description" content="Découvrez notre collection exclusive de hijabs et foulards élégants. Qualité premium, livraison rapide." />
+        <meta name="description" content="Découvrez notre collection exclusive de hijabs élégants. Qualité premium, livraison rapide." />
       </Helmet>
 
       {/* ─── HERO ─── */}
-      <section className="relative h-screen overflow-hidden bg-night">
-        <div className="absolute inset-0 bg-hero-gradient" />
-        {/* Glow effect */}
-        <div className="absolute top-1/3 left-1/2 -translate-x-1/2 -translate-y-1/2 w-96 h-96
-                        rounded-full bg-blue-500/20 blur-3xl pointer-events-none" />
-        <div className="absolute top-1/2 right-20 w-64 h-64 rounded-full bg-gold-500/10 blur-3xl pointer-events-none" />
+      <section className="relative min-h-[90vh] bg-hero-gradient overflow-hidden flex items-center">
+        {/* Decorative circles */}
+        <div className="absolute top-0 right-0 w-96 h-96 bg-white/5 rounded-full -translate-y-1/2 translate-x-1/3" />
+        <div className="absolute bottom-0 left-0 w-64 h-64 bg-gold-500/10 rounded-full translate-y-1/3 -translate-x-1/4" />
+        <div className="absolute top-1/2 left-1/4 w-32 h-32 bg-white/5 rounded-full" />
 
-        <div className="relative z-10 h-full flex items-center justify-center text-center px-6">
-          <motion.div
-            initial={{ opacity: 0, y: 40 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.9 }}
-          >
-            {/* Logo large */}
+        <div className="container mx-auto px-4 py-20 relative z-10">
+          <div className="max-w-2xl mx-auto text-center">
+            {/* Logo animé */}
             <motion.div
-              animate={{ filter: ['drop-shadow(0 0 10px #2563EB80)', 'drop-shadow(0 0 30px #2563EB)', 'drop-shadow(0 0 10px #2563EB80)'] }}
-              transition={{ duration: 3, repeat: Infinity }}
-              className="mb-6 flex justify-center"
+              initial={{ opacity: 0, y: -30 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8 }}
+              className="mb-8 flex justify-center"
             >
-              <img src="/logo.svg" alt="ChezAntaBada" className="h-24 w-auto mx-auto"
-                   onError={e => { e.target.style.display='none' }} />
+              <motion.img
+                src="/logo.png"
+                alt="ChezAntaBada"
+                className="h-32 w-auto drop-shadow-2xl"
+                animate={{ y: [0, -8, 0] }}
+                transition={{ duration: 4, repeat: Infinity, ease: 'easeInOut' }}
+                onError={e => { e.target.style.display='none' }}
+              />
             </motion.div>
 
-            <p className="font-script text-gold-400 text-2xl mb-3">Bienvenue chez</p>
-            <h1 className="font-display text-5xl md:text-7xl font-bold text-white mb-2">
-              Chez<span className="text-blue-400">Anta</span><span className="logo-text">Bada</span>
-            </h1>
-            <p className="text-gold-300 font-medium tracking-[0.3em] text-sm mb-8">HIJAB FASHION</p>
-            <p className="text-white/70 text-lg mb-10 max-w-lg mx-auto">
-              Des hijabs et foulards d'exception pour la femme élégante. Qualité premium, livraison rapide.
-            </p>
-            <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <Link to="/boutique"
-                    className="bg-blue-500 text-white font-medium px-8 py-4 rounded-full
-                               hover:bg-blue-600 active:scale-95 transition-all duration-200
-                               shadow-lg shadow-blue-500/30 inline-flex items-center gap-2 text-base">
-                Découvrir la collection <FiArrowRight />
-              </Link>
-              <Link to="/boutique?featured=true"
-                    className="border-2 border-gold-400 text-gold-400 font-medium px-8 py-4
-                               rounded-full hover:bg-gold-500 hover:text-white hover:border-gold-500
-                               transition-all duration-200 inline-flex items-center gap-2 text-base">
-                Pièces phares
-              </Link>
-            </div>
-          </motion.div>
+            <motion.div
+              initial={{ opacity: 0, y: 30 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8, delay: 0.2 }}
+            >
+              <p className="font-script text-gold-300 text-2xl mb-2">Bienvenue chez</p>
+              <h1 className="font-display text-5xl md:text-7xl font-bold text-white mb-3 leading-tight">
+                Chez<span className="text-blue-300">Anta</span>Bada
+              </h1>
+              <p className="text-gold-300 font-semibold tracking-[0.4em] text-sm mb-6 uppercase">
+                ✦ Hijab Fashion ✦
+              </p>
+              <p className="text-white/80 text-lg mb-10 leading-relaxed">
+                Des hijabs et foulards d'exception pour la femme élégante moderne.
+                <br />Qualité premium · Livraison rapide · Made with ❤️
+              </p>
+
+              <div className="flex flex-col sm:flex-row gap-4 justify-center">
+                <Link to="/boutique"
+                      className="bg-white text-blue-600 font-bold px-8 py-4 rounded-full
+                                 hover:bg-blue-50 active:scale-95 transition-all duration-200
+                                 shadow-xl inline-flex items-center gap-2 text-base">
+                  Découvrir la collection <FiArrowRight />
+                </Link>
+                <Link to="/boutique?featured=true"
+                      className="border-2 border-gold-400 text-gold-300 font-semibold px-8 py-4
+                                 rounded-full hover:bg-gold-500 hover:text-white hover:border-gold-500
+                                 transition-all duration-200 inline-flex items-center gap-2 text-base">
+                  Pièces phares ✨
+                </Link>
+              </div>
+            </motion.div>
+          </div>
         </div>
 
-        {/* Scroll indicator */}
-        <motion.div
-          animate={{ y: [0, 10, 0] }}
-          transition={{ repeat: Infinity, duration: 2 }}
-          className="absolute bottom-8 left-1/2 -translate-x-1/2 z-10"
-        >
-          <div className="w-6 h-10 border-2 border-blue-400/50 rounded-full flex justify-center pt-2">
-            <div className="w-1 h-3 bg-blue-400/70 rounded-full" />
-          </div>
-        </motion.div>
+        {/* Vague décorative */}
+        <div className="absolute bottom-0 left-0 right-0">
+          <svg viewBox="0 0 1440 80" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M0,40 C360,80 1080,0 1440,40 L1440,80 L0,80 Z" fill="white"/>
+          </svg>
+        </div>
       </section>
 
       {/* ─── VALUES ─── */}
-      <section className="bg-night text-white py-12 border-t border-white/5">
+      <section className="py-16 bg-white">
         <div className="container mx-auto px-4">
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-6 text-center">
-            {[
-              { icon: '🌿', label: 'Matières naturelles' },
-              { icon: '✨', label: 'Qualité premium'     },
-              { icon: '🚚', label: 'Livraison rapide'    },
-              { icon: '💎', label: 'Éditions limitées'   },
-            ].map((v, i) => (
-              <motion.div key={i}
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
+            {VALUES.map((v, i) => (
+              <motion.div
+                key={i}
                 initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 transition={{ delay: i * 0.1 }}
                 viewport={{ once: true }}
-                className="flex flex-col items-center gap-3"
+                className="text-center p-6 rounded-2xl border border-blue-100 hover:border-blue-300
+                           hover:shadow-blue-sm transition-all duration-300 group"
               >
-                <span className="text-3xl">{v.icon}</span>
-                <p className="font-medium text-blue-300 text-sm">{v.label}</p>
+                <div className="w-12 h-12 bg-blue-50 rounded-full flex items-center justify-center
+                                mx-auto mb-3 group-hover:bg-blue-500 transition-colors duration-300">
+                  <v.icon size={22} className="text-blue-500 group-hover:text-white transition-colors" />
+                </div>
+                <p className="font-semibold text-ink text-sm mb-1">{v.label}</p>
+                <p className="text-xs text-muted">{v.desc}</p>
               </motion.div>
             ))}
           </div>
@@ -112,11 +128,12 @@ export default function Home() {
       </section>
 
       {/* ─── FEATURED PRODUCTS ─── */}
-      <section className="py-20 bg-cream">
+      <section className="py-20 bg-light">
         <div className="container mx-auto px-4">
           <div className="text-center mb-12">
-            <p className="font-script text-blue-500 text-xl mb-2">Notre sélection</p>
-            <h2 className="section-title">Pièces phares</h2>
+            <p className="font-script text-gold-500 text-2xl mb-2">Notre sélection</p>
+            <h2 className="section-title mb-3">Pièces phares</h2>
+            <div className="w-20 h-1 bg-gold-gradient rounded-full mx-auto" />
           </div>
 
           <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
@@ -124,62 +141,61 @@ export default function Home() {
               <motion.div key={product._id}
                 initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
-                transition={{ delay: i * 0.05 }}
+                transition={{ delay: i * 0.06 }}
                 viewport={{ once: true }}
               >
                 <ProductCard product={product} />
               </motion.div>
             ))}
             {!data?.products?.length && Array(8).fill(0).map((_, i) => (
-              <div key={i} className="bg-white rounded-2xl h-80 animate-pulse" />
+              <div key={i} className="bg-white rounded-2xl h-80 animate-pulse border border-blue-100" />
             ))}
           </div>
 
           <div className="text-center mt-12">
-            <Link to="/boutique" className="btn-outline">Voir tout le catalogue</Link>
+            <Link to="/boutique" className="btn-outline-blue inline-flex items-center gap-2">
+              Voir tout le catalogue <FiArrowRight size={16} />
+            </Link>
           </div>
         </div>
       </section>
 
-      {/* ─── CATEGORIES ─── */}
-      <section className="py-20 bg-night">
+      {/* ─── COLLECTIONS ─── */}
+      <section className="py-20 bg-white">
         <div className="container mx-auto px-4">
           <div className="text-center mb-12">
-            <p className="font-script text-gold-400 text-xl mb-2">Notre univers</p>
-            <h2 className="section-title text-white">Nos Collections</h2>
+            <p className="font-script text-blue-500 text-2xl mb-2">Notre univers</p>
+            <h2 className="section-title mb-3">Nos Collections</h2>
+            <div className="w-20 h-1 bg-blue-gradient rounded-full mx-auto" />
           </div>
+
           <div className="grid md:grid-cols-3 gap-6">
             {[
-              {
-                name: 'Hijab Soie',
-                desc: 'Luxe & légèreté',
-                img: 'https://images.unsplash.com/photo-1594938298603-c8148c4dae35?w=600&q=80',
-                color: 'from-blue-900/80',
-              },
-              {
-                name: 'Hijab Coton',
-                desc: 'Confort au quotidien',
-                img: 'https://images.unsplash.com/photo-1614252369475-531eba835eb1?w=600&q=80',
-                color: 'from-night/80',
-              },
-              {
-                name: 'Hijab Crêpe',
-                desc: 'Élégance mate',
-                img: 'https://images.unsplash.com/photo-1550639525-c97d455acf70?w=600&q=80',
-                color: 'from-blue-800/80',
-              },
+              { name: 'Hijab Soie',   desc: 'Luxe & légèreté',     img: 'https://images.unsplash.com/photo-1594938298603-c8148c4dae35?w=600&q=80' },
+              { name: 'Hijab Coton',  desc: 'Confort au quotidien', img: 'https://images.unsplash.com/photo-1614252369475-531eba835eb1?w=600&q=80' },
+              { name: 'Foulard Luxe', desc: 'Éditions exclusives',  img: 'https://images.unsplash.com/photo-1483985988355-763728e1935b?w=600&q=80' },
             ].map((cat, i) => (
-              <motion.div key={i} whileHover={{ scale: 1.02 }}
-                          className="relative h-72 rounded-2xl overflow-hidden cursor-pointer group">
+              <motion.div key={i}
+                whileHover={{ y: -4 }}
+                className="group relative h-72 rounded-2xl overflow-hidden cursor-pointer
+                           shadow-blue-sm hover:shadow-blue-md transition-all duration-300"
+              >
                 <img src={cat.img} alt={cat.name}
                      className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
                      onError={e => { e.target.src = 'https://images.unsplash.com/photo-1490481651871-ab68de25d43d?w=600&q=80' }} />
-                <div className={`absolute inset-0 bg-gradient-to-t ${cat.color} to-transparent`} />
-                <Link to={`/boutique`} className="absolute bottom-6 left-6 text-white">
-                  <h3 className="font-display text-2xl font-bold">{cat.name}</h3>
-                  <p className="text-blue-300 text-sm">{cat.desc}</p>
-                  <span className="mt-2 inline-block text-xs text-gold-400 font-medium">Voir →</span>
-                </Link>
+                <div className="absolute inset-0 bg-gradient-to-t from-blue-900/80 via-blue-600/20 to-transparent" />
+
+                {/* Content */}
+                <div className="absolute bottom-0 left-0 right-0 p-6">
+                  <h3 className="font-display text-xl font-bold text-white mb-1">{cat.name}</h3>
+                  <p className="text-gold-300 text-sm mb-3">{cat.desc}</p>
+                  <Link to="/boutique"
+                        className="inline-flex items-center gap-1 text-xs font-semibold text-white
+                                   bg-blue-500/80 hover:bg-blue-500 px-4 py-1.5 rounded-full
+                                   transition-colors backdrop-blur-sm">
+                    Voir →
+                  </Link>
+                </div>
               </motion.div>
             ))}
           </div>
@@ -187,9 +203,14 @@ export default function Home() {
       </section>
 
       {/* ─── TESTIMONIALS ─── */}
-      <section className="py-20 bg-night text-white">
+      <section className="py-20 bg-light">
         <div className="container mx-auto px-4">
-          <h2 className="font-display text-3xl font-bold text-center mb-12 text-white">Ce qu'elles disent</h2>
+          <div className="text-center mb-12">
+            <p className="font-script text-gold-500 text-2xl mb-2">Elles témoignent</p>
+            <h2 className="section-title mb-3">Ce qu'elles disent</h2>
+            <div className="w-20 h-1 bg-gold-gradient rounded-full mx-auto" />
+          </div>
+
           <div className="grid md:grid-cols-3 gap-8">
             {TESTIMONIALS.map((t, i) => (
               <motion.div key={i}
@@ -197,31 +218,50 @@ export default function Home() {
                 whileInView={{ opacity: 1, y: 0 }}
                 transition={{ delay: i * 0.15 }}
                 viewport={{ once: true }}
-                className="bg-white/5 border border-blue-500/20 rounded-2xl p-6 hover:border-blue-400/40 transition-colors"
+                className="bg-white rounded-2xl p-6 border border-blue-100 shadow-blue-sm
+                           hover:shadow-blue-md hover:border-blue-300 transition-all duration-300"
               >
-                <div className="flex gap-1 mb-3 text-gold-400">
+                <div className="flex gap-1 mb-3">
                   {Array(t.stars).fill(0).map((_, j) => (
-                    <FiStar key={j} className="fill-current" size={14} />
+                    <FiStar key={j} className="fill-gold-400 text-gold-400" size={16} />
                   ))}
                 </div>
-                <p className="text-white/80 mb-4 italic text-sm">"{t.text}"</p>
-                <p className="font-semibold text-blue-300 text-sm">— {t.name}</p>
+                <p className="text-muted mb-4 italic text-sm leading-relaxed">"{t.text}"</p>
+                <div className="flex items-center gap-3">
+                  <div className="w-8 h-8 rounded-full bg-blue-500 flex items-center justify-center text-white text-sm font-bold">
+                    {t.name[0]}
+                  </div>
+                  <p className="font-semibold text-blue-600 text-sm">{t.name}</p>
+                </div>
               </motion.div>
             ))}
           </div>
         </div>
       </section>
 
-      {/* ─── CTA ─── */}
-      <section className="py-20 bg-blue-gradient text-white text-center">
-        <div className="container mx-auto px-4">
-          <h2 className="font-display text-4xl font-bold mb-4">Prête à sublimer votre style ?</h2>
-          <p className="text-white/80 mb-8 text-lg">Découvrez notre collection complète et trouvez votre hijab idéal.</p>
-          <Link to="/boutique"
-                className="bg-white text-blue-600 font-bold px-8 py-4 rounded-full
-                           hover:bg-cream transition-colors inline-flex items-center gap-2 text-lg shadow-lg">
-            Visiter la boutique <FiArrowRight />
-          </Link>
+      {/* ─── CTA FINAL ─── */}
+      <section className="py-20 bg-hero-gradient relative overflow-hidden">
+        <div className="absolute top-0 right-0 w-64 h-64 bg-white/5 rounded-full translate-x-1/3 -translate-y-1/3" />
+        <div className="container mx-auto px-4 text-center relative z-10">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+          >
+            <p className="font-script text-gold-300 text-2xl mb-3">Prête ?</p>
+            <h2 className="font-display text-4xl font-bold text-white mb-4">
+              Sublimez votre style
+            </h2>
+            <p className="text-white/70 mb-8 text-lg max-w-md mx-auto">
+              Trouvez le hijab parfait dans notre collection exclusive.
+            </p>
+            <Link to="/boutique"
+                  className="bg-white text-blue-600 font-bold px-10 py-4 rounded-full
+                             hover:bg-blue-50 transition-colors inline-flex items-center gap-2
+                             text-lg shadow-xl">
+              Visiter la boutique <FiArrowRight />
+            </Link>
+          </motion.div>
         </div>
       </section>
     </>
