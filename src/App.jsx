@@ -2,6 +2,7 @@ import { Routes, Route } from 'react-router-dom'
 import { AuthProvider } from '@/context/AuthContext'
 import { CartProvider } from '@/context/CartContext'
 import Layout from '@/components/layout/Layout'
+import AdminLayout from '@/components/admin/AdminLayout'
 import Home from '@/pages/Home'
 import Shop from '@/pages/Shop'
 import ProductDetail from '@/pages/ProductDetail'
@@ -13,6 +14,7 @@ import Profile from '@/pages/Profile'
 import Orders from '@/pages/Orders'
 import AdminDashboard from '@/pages/admin/Dashboard'
 import AdminProducts from '@/pages/admin/Products'
+import AdminCategories from '@/pages/admin/Categories'
 import AdminOrders from '@/pages/admin/AdminOrders'
 import ProtectedRoute from '@/components/ProtectedRoute'
 import AdminRoute from '@/components/AdminRoute'
@@ -22,6 +24,7 @@ export default function App() {
     <AuthProvider>
       <CartProvider>
         <Routes>
+          {/* Public + user routes */}
           <Route element={<Layout />}>
             <Route path="/" element={<Home />} />
             <Route path="/boutique" element={<Shop />} />
@@ -34,9 +37,14 @@ export default function App() {
               <Route path="/profil" element={<Profile />} />
               <Route path="/commandes" element={<Orders />} />
             </Route>
-            <Route element={<AdminRoute />}>
+          </Route>
+
+          {/* Admin routes avec AdminLayout */}
+          <Route element={<AdminRoute />}>
+            <Route element={<AdminLayout />}>
               <Route path="/admin" element={<AdminDashboard />} />
               <Route path="/admin/produits" element={<AdminProducts />} />
+              <Route path="/admin/categories" element={<AdminCategories />} />
               <Route path="/admin/commandes" element={<AdminOrders />} />
             </Route>
           </Route>
