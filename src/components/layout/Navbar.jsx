@@ -40,9 +40,9 @@ export default function Navbar() {
           {/* Logo */}
           <Link to="/" className="flex items-center group">
             <motion.img
-              src="/logo.png"
+              src="https://res.cloudinary.com/dsdxrx5je/image/upload/v1775422192/chezantabada/logo.jpg"
               alt="ChezAntaBada"
-              className="h-14 w-auto"
+              className="h-14 w-auto object-contain"
               whileHover={{ scale: 1.05 }}
               animate={{ filter: ['drop-shadow(0 0 8px rgba(30,144,255,0.4))', 'drop-shadow(0 0 20px rgba(30,144,255,0.8))', 'drop-shadow(0 0 8px rgba(30,144,255,0.4))'] }}
               transition={{ duration: 3, repeat: Infinity }}

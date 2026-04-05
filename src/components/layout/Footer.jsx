@@ -12,8 +12,12 @@ export default function Footer() {
           {/* Brand */}
           <div className="md:col-span-2">
             <div className="flex items-center gap-3 mb-5">
-              <img src="/logo.png" alt="ChezAntaBada" className="h-14 w-auto"
-                   onError={e => e.target.style.display='none'} />
+              <img
+                src="https://res.cloudinary.com/dsdxrx5je/image/upload/v1775422192/chezantabada/logo.jpg"
+                alt="ChezAntaBada"
+                className="h-14 w-auto object-contain"
+                onError={e => e.target.style.display='none'}
+              />
             </div>
             <p className="text-muted text-sm leading-relaxed max-w-xs mb-6">
               Des hijabs et foulards d'exception, pensés pour la femme élégante et moderne.
