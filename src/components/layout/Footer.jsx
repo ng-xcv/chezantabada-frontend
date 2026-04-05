@@ -13,10 +13,9 @@ export default function Footer() {
           <div className="md:col-span-2">
             <div className="flex items-center gap-3 mb-5">
               <img
-                src="https://res.cloudinary.com/dsdxrx5je/image/upload/v1775422952/chezantabada/logo_v3.jpg"
+                src="https://res.cloudinary.com/dsdxrx5je/image/upload/e_bgremoval,f_png/chezantabada/logo_v3"
                 alt="ChezAntaBada"
                 className="h-20 w-auto object-contain"
-                style={{ mixBlendMode: 'screen' }}
                 onError={e => e.target.style.display='none'}
               />
             </div>

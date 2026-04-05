@@ -110,10 +110,9 @@ export default function Home() {
               {/* Logo */}
               <motion.div variants={fadeUp} className="mb-10 flex justify-center">
                 <motion.img
-                  src="https://res.cloudinary.com/dsdxrx5je/image/upload/v1775422952/chezantabada/logo_v3.jpg"
+                  src="https://res.cloudinary.com/dsdxrx5je/image/upload/e_bgremoval,f_png/chezantabada/logo_v3"
                   alt="ChezAntaBada"
                   className="h-52 md:h-64 w-auto object-contain"
-                  style={{ mixBlendMode: 'screen' }}
                   animate={{ y: [0, -10, 0] }}
                   transition={{ duration: 5, repeat: Infinity, ease: 'easeInOut' }}
                   onError={e => { e.target.style.display = 'none' }}
