@@ -40,11 +40,12 @@ export default function Navbar() {
           {/* Logo */}
           <Link to="/" className="flex items-center group">
             <motion.img
-              src="https://res.cloudinary.com/dsdxrx5je/image/upload/v1775422192/chezantabada/logo.jpg"
+              src="https://res.cloudinary.com/dsdxrx5je/image/upload/v1775422585/chezantabada/logo_transparent.jpg"
               alt="ChezAntaBada"
-              className="h-14 w-auto object-contain"
+              className="h-16 w-auto object-contain"
+              style={{ mixBlendMode: 'screen' }}
               whileHover={{ scale: 1.05 }}
-              animate={{ filter: ['drop-shadow(0 0 8px rgba(30,144,255,0.4))', 'drop-shadow(0 0 20px rgba(30,144,255,0.8))', 'drop-shadow(0 0 8px rgba(30,144,255,0.4))'] }}
+              animate={{ filter: ['drop-shadow(0 0 8px rgba(30,144,255,0.5))', 'drop-shadow(0 0 22px rgba(30,144,255,0.9))', 'drop-shadow(0 0 8px rgba(30,144,255,0.5))'] }}
               transition={{ duration: 3, repeat: Infinity }}
               onError={e => { e.target.style.display='none'; e.target.nextSibling.style.display='flex' }}
             />

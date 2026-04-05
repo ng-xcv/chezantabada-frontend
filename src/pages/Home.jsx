@@ -116,14 +116,16 @@ export default function Home() {
               {/* Logo */}
               <motion.div variants={fadeUp} className="mb-8 flex justify-center lg:justify-start">
                 <motion.img
-                  src="https://res.cloudinary.com/dsdxrx5je/image/upload/v1775422192/chezantabada/logo.jpg"
+                  src="https://res.cloudinary.com/dsdxrx5je/image/upload/v1775422585/chezantabada/logo_transparent.jpg"
                   alt="ChezAntaBada"
-                  className="h-24 md:h-28 w-auto object-contain"
+                  className="h-28 md:h-36 w-auto object-contain"
+                  style={{ mixBlendMode: 'screen' }}
                   animate={{
+                    y: [0, -8, 0],
                     filter: [
-                      'drop-shadow(0 0 10px rgba(30,144,255,0.4))',
-                      'drop-shadow(0 0 30px rgba(30,144,255,0.8))',
-                      'drop-shadow(0 0 10px rgba(30,144,255,0.4))',
+                      'drop-shadow(0 0 12px rgba(30,144,255,0.5))',
+                      'drop-shadow(0 0 35px rgba(30,144,255,0.95))',
+                      'drop-shadow(0 0 12px rgba(30,144,255,0.5))',
                     ],
                   }}
                   transition={{ duration: 3.5, repeat: Infinity, ease: 'easeInOut' }}
