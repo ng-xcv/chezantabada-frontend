@@ -1,7 +1,7 @@
-import { useState } from 'react'
+import { useState, useRef } from 'react'
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query'
 import { motion, AnimatePresence } from 'framer-motion'
-import { FiPlus, FiEdit2, FiTrash2, FiX, FiSearch, FiImage, FiSave, FiAlertTriangle, FiPackage } from 'react-icons/fi'
+import { FiPlus, FiEdit2, FiTrash2, FiX, FiSearch, FiImage, FiSave, FiAlertTriangle, FiPackage, FiUpload, FiLoader } from 'react-icons/fi'
 import { productService } from '@/services/productService'
 import Loader from '@/components/ui/Loader'
 import toast from 'react-hot-toast'
@@ -66,6 +66,9 @@ export default function AdminProducts() {
     onError:    () => toast.error('Erreur suppression'),
   })
 
+  const [uploadingImages, setUploadingImages] = useState(false)
+  const fileInputRef = useRef(null)
+
   const set = (key, val) => setForm(f => ({ ...f, [key]: val }))
 
   const openCreate = () => { setEditing(null); setForm(EMPTY); setShowForm(true) }
@@ -127,6 +130,22 @@ export default function AdminProducts() {
   }
 
   const removeImage = (idx) => set('images', form.images.filter((_, i) => i !== idx))
+
+  const handleFileUpload = async (e) => {
+    const files = Array.from(e.target.files)
+    if (!files.length) return
+    setUploadingImages(true)
+    try {
+      const urls = await productService.uploadImages(files)
+      set('images', [...form.images, ...urls])
+      toast.success(`${urls.length} image(s) uploadée(s) ✅`)
+    } catch (err) {
+      toast.error(err.response?.data?.message || 'Erreur upload images')
+    } finally {
+      setUploadingImages(false)
+      if (fileInputRef.current) fileInputRef.current.value = ''
+    }
+  }
 
   const loading = createMut.isPending || updateMut.isPending
 
@@ -406,46 +425,93 @@ export default function AdminProducts() {
                 {/* ── Images ── */}
                 <section>
                   <h3 className="text-xs text-muted uppercase tracking-wider mb-4 flex items-center gap-2">
-                    <span className="w-4 h-px bg-gold-500" /> Images (URLs)
+                    <span className="w-4 h-px bg-gold-500" /> Images du produit
                   </h3>
+
+                  {/* Prévisualisation des images */}
                   {form.images.length > 0 && (
                     <div className="flex gap-3 mb-4 flex-wrap">
                       {form.images.map((img, i) => (
                         <div key={i} className="relative group">
-                          <img src={img} alt=""
-                               className="w-16 h-20 rounded-xl object-cover bg-darker border border-border" />
+                          <img src={img} alt={`Image ${i + 1}`}
+                               className="w-20 h-24 rounded-xl object-cover bg-darker border border-border" />
+                          {i === 0 && (
+                            <span className="absolute bottom-1 left-1 right-1 text-center text-[10px]
+                                             bg-gold-500/90 text-black font-bold rounded-md px-1">
+                              Principale
+                            </span>
+                          )}
                           <button type="button" onClick={() => removeImage(i)}
-                                  className="absolute -top-1 -right-1 w-5 h-5 bg-red-500 rounded-full
+                                  className="absolute -top-1.5 -right-1.5 w-5 h-5 bg-red-500 rounded-full
                                              flex items-center justify-center opacity-0 group-hover:opacity-100
-                                             transition-opacity">
+                                             transition-opacity shadow-md">
                             <FiX size={10} className="text-white" />
                           </button>
                         </div>
                       ))}
                     </div>
                   )}
-                  <div className="flex gap-2">
-                    <input type="url" placeholder="https://images.unsplash.com/..."
-                           id="img-input"
-                           className="input-field flex-1 text-sm py-2.5"
-                           onKeyDown={e => {
-                             if (e.key === 'Enter') {
-                               e.preventDefault()
-                               addImage(e.target.value.trim())
-                               e.target.value = ''
-                             }
-                           }} />
-                    <button type="button"
-                            onClick={() => {
-                              const input = document.getElementById('img-input')
-                              addImage(input.value.trim())
-                              input.value = ''
-                            }}
-                            className="btn-outline-gold text-sm px-4 py-2.5 whitespace-nowrap">
-                      + Ajouter
-                    </button>
+
+                  {/* Zone d'upload par fichier */}
+                  <div
+                    className={`border-2 border-dashed rounded-2xl p-6 text-center transition-colors cursor-pointer
+                                ${uploadingImages
+                                  ? 'border-gold-500/50 bg-gold-500/5'
+                                  : 'border-border hover:border-gold-500/50 hover:bg-gold-500/5'}`}
+                    onClick={() => !uploadingImages && fileInputRef.current?.click()}
+                  >
+                    <input
+                      ref={fileInputRef}
+                      type="file"
+                      accept="image/jpeg,image/jpg,image/png,image/webp"
+                      multiple
+                      className="hidden"
+                      onChange={handleFileUpload}
+                    />
+                    {uploadingImages ? (
+                      <div className="flex flex-col items-center gap-2">
+                        <div className="w-8 h-8 border-2 border-gold-500 border-t-transparent
+                                        rounded-full animate-spin" />
+                        <p className="text-sm text-gold-400">Upload en cours...</p>
+                      </div>
+                    ) : (
+                      <div className="flex flex-col items-center gap-2 pointer-events-none">
+                        <FiUpload size={24} className="text-muted" />
+                        <p className="text-sm text-white/70 font-medium">
+                          Cliquez pour joindre des images
+                        </p>
+                        <p className="text-xs text-muted">
+                          JPG, PNG, WebP · Max 5 Mo · Plusieurs fichiers acceptés
+                        </p>
+                      </div>
+                    )}
                   </div>
-                  <p className="text-xs text-muted mt-1">Appuyez sur Entrée ou cliquez + Ajouter</p>
+
+                  {/* Ou via URL */}
+                  <div className="mt-3">
+                    <p className="text-xs text-muted mb-2 text-center">— ou ajouter via URL —</p>
+                    <div className="flex gap-2">
+                      <input type="url" placeholder="https://images.unsplash.com/..."
+                             id="img-input"
+                             className="input-field flex-1 text-sm py-2.5"
+                             onKeyDown={e => {
+                               if (e.key === 'Enter') {
+                                 e.preventDefault()
+                                 addImage(e.target.value.trim())
+                                 e.target.value = ''
+                               }
+                             }} />
+                      <button type="button"
+                              onClick={() => {
+                                const input = document.getElementById('img-input')
+                                addImage(input.value.trim())
+                                input.value = ''
+                              }}
+                              className="btn-outline-gold text-sm px-4 py-2.5 whitespace-nowrap">
+                        + URL
+                      </button>
+                    </div>
+                  </div>
                 </section>
 
                 {/* ── Options ── */}
