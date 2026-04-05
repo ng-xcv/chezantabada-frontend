@@ -40,7 +40,7 @@ export default function Navbar() {
           {/* Logo */}
           <Link to="/" className="flex items-center group">
             <motion.img
-              src="https://res.cloudinary.com/dsdxrx5je/image/upload/v1775422585/chezantabada/logo_transparent.jpg"
+              src="https://res.cloudinary.com/dsdxrx5je/image/upload/v1775422952/chezantabada/logo_v3.jpg"
               alt="ChezAntaBada"
               className="h-16 w-auto object-contain"
               style={{ mixBlendMode: 'screen' }}

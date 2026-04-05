@@ -6,7 +6,7 @@ import { productService } from '@/services/productService'
 import ProductCard from '@/components/ui/ProductCard'
 import { FiArrowRight, FiStar, FiTruck, FiAward, FiHeart, FiShield, FiInstagram, FiZap, FiGift } from 'react-icons/fi'
 import { useRef } from 'react'
-import WomanSilk3D from '@/components/hero/WomanSilk3D'
+
 
 const TESTIMONIALS = [
   { name: 'Fatou D.',    city: 'Dakar',   text: 'Qualité exceptionnelle ! Le hijab est encore plus beau en vrai. Je recommande vivement.', stars: 5 },
@@ -103,91 +103,40 @@ export default function Home() {
         <div className="absolute inset-0 opacity-5"
              style={{ backgroundImage: 'linear-gradient(#1E90FF 1px, transparent 1px), linear-gradient(90deg, #1E90FF 1px, transparent 1px)', backgroundSize: '60px 60px' }} />
 
-        <div className="container mx-auto px-4 py-24 relative z-10">
-          <div className="flex flex-col lg:flex-row items-center justify-between gap-10 min-h-[75vh]">
+        <div className="container mx-auto px-4 relative z-10 flex items-center min-h-screen">
+          <div className="w-full max-w-2xl mx-auto text-center">
+            <motion.div variants={stagger} initial="hidden" animate="visible">
 
-            {/* ── Texte gauche ── */}
-            <motion.div
-              variants={stagger}
-              initial="hidden"
-              animate="visible"
-              className="flex-1 text-center lg:text-left max-w-xl"
-            >
               {/* Logo */}
-              <motion.div variants={fadeUp} className="mb-8 flex justify-center lg:justify-start">
+              <motion.div variants={fadeUp} className="mb-10 flex justify-center">
                 <motion.img
-                  src="https://res.cloudinary.com/dsdxrx5je/image/upload/v1775422585/chezantabada/logo_transparent.jpg"
+                  src="https://res.cloudinary.com/dsdxrx5je/image/upload/v1775422952/chezantabada/logo_v3.jpg"
                   alt="ChezAntaBada"
-                  className="h-28 md:h-36 w-auto object-contain"
+                  className="h-52 md:h-64 w-auto object-contain"
                   style={{ mixBlendMode: 'screen' }}
-                  animate={{
-                    y: [0, -8, 0],
-                    filter: [
-                      'drop-shadow(0 0 12px rgba(30,144,255,0.5))',
-                      'drop-shadow(0 0 35px rgba(30,144,255,0.95))',
-                      'drop-shadow(0 0 12px rgba(30,144,255,0.5))',
-                    ],
-                  }}
-                  transition={{ duration: 3.5, repeat: Infinity, ease: 'easeInOut' }}
+                  animate={{ y: [0, -10, 0] }}
+                  transition={{ duration: 5, repeat: Infinity, ease: 'easeInOut' }}
                   onError={e => { e.target.style.display = 'none' }}
                 />
               </motion.div>
 
-              <motion.p variants={fadeUp} className="font-script text-gold-400 text-2xl md:text-3xl mb-2">
-                Bienvenue chez
-              </motion.p>
-              <motion.h1 variants={fadeUp} className="font-display text-5xl md:text-7xl font-bold text-white mb-4 leading-none">
-                Chez<span className="text-blue-400">Anta</span><span className="gold-text">Bada</span>
-              </motion.h1>
-
-              <motion.div variants={fadeUp} className="flex items-center justify-center lg:justify-start gap-3 mb-6">
-                <div className="divider-gold w-12" />
-                <span className="text-gold-400 font-semibold tracking-[0.3em] text-xs">✦ HIJAB FASHION ✦</span>
-                <div className="divider-gold w-12" />
-              </motion.div>
-
-              <motion.p variants={fadeUp} className="text-white/70 text-lg mb-10 leading-relaxed">
-                Des hijabs d'exception pour la femme africaine élégante.
-                Soie luxueuse · Qualité premium · Livraison rapide partout en Afrique.
+              {/* Tagline */}
+              <motion.p variants={fadeUp} className="text-white/60 text-lg md:text-xl mb-10 leading-relaxed">
+                Des hijabs d'exception pour la femme élégante.
+                <br />Qualité premium · Livraison rapide en Afrique.
               </motion.p>
 
-              <motion.div variants={fadeUp} className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start">
-                <Link to="/boutique"
-                      className="btn-gold inline-flex items-center gap-2 text-base px-8 py-4">
+              {/* CTAs */}
+              <motion.div variants={fadeUp} className="flex flex-col sm:flex-row gap-4 justify-center">
+                <Link to="/boutique" className="btn-gold inline-flex items-center gap-2 text-base px-10 py-4">
                   Découvrir la collection <FiArrowRight />
                 </Link>
-                <Link to="/boutique?featured=true"
-                      className="btn-outline-blue inline-flex items-center gap-2 text-base px-8 py-4">
+                <Link to="/boutique?featured=true" className="btn-outline-blue inline-flex items-center gap-2 text-base px-10 py-4">
                   Pièces phares ✨
                 </Link>
               </motion.div>
 
-              {/* Mini stats */}
-              <motion.div variants={fadeUp} className="flex gap-6 mt-10 justify-center lg:justify-start">
-                {[
-                  { val: '2500+', label: 'Clientes' },
-                  { val: '4.9★', label: 'Avis'     },
-                  { val: '48h',   label: 'Livraison'},
-                ].map((s, i) => (
-                  <div key={i} className="text-center">
-                    <p className="text-gold-400 font-bold text-xl">{s.val}</p>
-                    <p className="text-muted text-xs">{s.label}</p>
-                  </div>
-                ))}
-              </motion.div>
             </motion.div>
-
-            {/* ── Animation 3D femme voilée ── */}
-            <motion.div
-              initial={{ opacity: 0, x: 60 }}
-              animate={{ opacity: 1, x: 0 }}
-              transition={{ duration: 1.2, ease: 'easeOut', delay: 0.3 }}
-              className="flex-1 flex items-center justify-center w-full"
-              style={{ minHeight: '500px', maxWidth: '480px' }}
-            >
-              <WomanSilk3D />
-            </motion.div>
-
           </div>
         </div>
 
