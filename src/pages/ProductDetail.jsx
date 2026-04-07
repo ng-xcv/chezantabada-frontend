@@ -23,7 +23,7 @@ export default function ProductDetail() {
   if (isLoading) return <div className="pt-24"><Loader /></div>
   if (!product)  return (
     <div className="pt-24 text-center py-20">
-      <p className="text-gray-500">Produit introuvable.</p>
+      <p className="text-gray-400">Produit introuvable.</p>
       <Link to="/boutique" className="btn-gold mt-4 inline-block">Retour boutique</Link>
     </div>
   )
@@ -37,17 +37,17 @@ export default function ProductDetail() {
         <meta name="description" content={product.description?.slice(0, 160)} />
       </Helmet>
 
-      <div className="pt-24 min-h-screen bg-cream">
+      <div className="pt-24 min-h-screen bg-dark">
         <div className="container mx-auto px-4 py-10">
           {/* Back */}
-          <Link to="/boutique" className="inline-flex items-center gap-2 text-sm text-gray-500 hover:text-gold-500 mb-8 transition-colors">
+          <Link to="/boutique" className="inline-flex items-center gap-2 text-sm text-gray-400 hover:text-gold-500 mb-8 transition-colors">
             <FiArrowLeft size={14} /> Retour à la boutique
           </Link>
 
-          <div className="grid md:grid-cols-2 gap-12 bg-white rounded-3xl p-8 shadow-sm">
+          <div className="grid md:grid-cols-2 gap-12 bg-card rounded-3xl p-8 shadow-card border border-border">
             {/* Gallery */}
             <div>
-              <div className="aspect-[3/4] rounded-2xl overflow-hidden bg-silk mb-4">
+              <div className="aspect-[3/4] rounded-2xl overflow-hidden bg-darker mb-4">
                 <motion.img
                   key={mainImg}
                   initial={{ opacity: 0 }}
@@ -65,7 +65,7 @@ export default function ProductDetail() {
                       key={i}
                       onClick={() => setMainImg(i)}
                       className={`w-16 h-16 rounded-xl overflow-hidden border-2 transition-all ${
-                        i === mainImg ? 'border-gold-500' : 'border-transparent'
+                        i === mainImg ? 'border-gold-500' : 'border-border'
                       }`}
                     >
                       <img src={img} alt="" className="w-full h-full object-cover" />
@@ -80,48 +80,48 @@ export default function ProductDetail() {
               <p className="text-xs text-gold-500 font-medium uppercase tracking-widest mb-2">
                 {product.category?.name}
               </p>
-              <h1 className="font-display text-3xl font-bold text-ink mb-4">{product.name}</h1>
+              <h1 className="font-display text-3xl font-bold text-white mb-4">{product.name}</h1>
 
               <div className="flex items-center gap-4 mb-6">
-                <span className="text-3xl font-bold text-ink">
+                <span className="text-3xl font-bold text-white">
                   {product.price?.toLocaleString('fr-FR')} FCFA
                 </span>
                 {product.oldPrice && (
-                  <span className="text-lg text-gray-400 line-through">
+                  <span className="text-lg text-gray-500 line-through">
                     {product.oldPrice.toLocaleString('fr-FR')} FCFA
                   </span>
                 )}
               </div>
 
-              <p className="text-gray-600 leading-relaxed mb-6">{product.description}</p>
+              <p className="text-gray-300 leading-relaxed mb-6">{product.description}</p>
 
               {/* Details */}
               {(product.material || product.dimensions) && (
-                <div className="bg-cream rounded-xl p-4 mb-6 space-y-2 text-sm">
-                  {product.material   && <p><span className="font-medium">Matière :</span> {product.material}</p>}
-                  {product.dimensions && <p><span className="font-medium">Dimensions :</span> {product.dimensions}</p>}
+                <div className="bg-darker rounded-xl p-4 mb-6 space-y-2 text-sm border border-border">
+                  {product.material   && <p className="text-gray-300"><span className="font-medium text-white">Matière :</span> {product.material}</p>}
+                  {product.dimensions && <p className="text-gray-300"><span className="font-medium text-white">Dimensions :</span> {product.dimensions}</p>}
                 </div>
               )}
 
               {/* Stock */}
               <div className="mb-6">
                 {product.stock === 0 ? (
-                  <span className="text-red-500 font-medium text-sm">⚠️ Rupture de stock</span>
+                  <span className="text-red-400 font-medium text-sm">⚠️ Rupture de stock</span>
                 ) : product.stock <= 5 ? (
-                  <span className="text-orange-500 font-medium text-sm">⚡ Plus que {product.stock} en stock !</span>
+                  <span className="text-orange-400 font-medium text-sm">⚡ Plus que {product.stock} en stock !</span>
                 ) : (
-                  <span className="text-green-600 font-medium text-sm">✅ En stock</span>
+                  <span className="text-green-400 font-medium text-sm">✅ En stock</span>
                 )}
               </div>
 
               {/* Qty + Add */}
               <div className="flex items-center gap-4 mt-auto">
-                <div className="flex items-center border-2 border-gray-200 rounded-full overflow-hidden">
+                <div className="flex items-center border-2 border-border rounded-full overflow-hidden bg-darker">
                   <button onClick={() => setQty(q => Math.max(1, q - 1))}
-                          className="px-4 py-3 hover:bg-gray-50 transition-colors font-bold">−</button>
-                  <span className="px-4 font-semibold">{qty}</span>
+                          className="px-4 py-3 hover:bg-card transition-colors font-bold text-white">−</button>
+                  <span className="px-4 font-semibold text-white">{qty}</span>
                   <button onClick={() => setQty(q => Math.min(product.stock, q + 1))}
-                          className="px-4 py-3 hover:bg-gray-50 transition-colors font-bold">+</button>
+                          className="px-4 py-3 hover:bg-card transition-colors font-bold text-white">+</button>
                 </div>
                 <button
                   onClick={() => {
