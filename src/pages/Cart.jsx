@@ -20,11 +20,11 @@ export default function Cart() {
 
   if (items.length === 0) {
     return (
-      <div className="pt-24 min-h-screen bg-cream flex items-center justify-center">
+      <div className="pt-24 min-h-screen bg-night flex items-center justify-center">
         <div className="text-center">
-          <FiShoppingBag size={64} className="text-gray-200 mx-auto mb-6" />
-          <h2 className="font-display text-2xl font-bold mb-4">Votre panier est vide</h2>
-          <p className="text-gray-500 mb-8">Découvrez nos magnifiques foulards !</p>
+          <FiShoppingBag size={64} className="text-gold-500/40 mx-auto mb-6" />
+          <h2 className="font-display text-2xl font-bold text-white mb-4">Votre panier est vide</h2>
+          <p className="text-muted mb-8">Découvrez nos magnifiques foulards !</p>
           <Link to="/boutique" className="btn-gold">Visiter la boutique</Link>
         </div>
       </div>
@@ -37,9 +37,9 @@ export default function Cart() {
         <title>Panier — ChezAntaBada</title>
       </Helmet>
 
-      <div className="pt-24 min-h-screen bg-cream">
+      <div className="pt-24 min-h-screen bg-night">
         <div className="container mx-auto px-4 py-10 max-w-4xl">
-          <h1 className="font-display text-3xl font-bold mb-8">
+          <h1 className="font-display text-3xl font-bold text-white mb-8">
             Mon panier <span className="text-gold-500">({items.length})</span>
           </h1>
 
@@ -51,24 +51,24 @@ export default function Cart() {
                   <motion.div
                     key={item._id}
                     exit={{ opacity: 0, x: -100 }}
-                    className="bg-white rounded-2xl p-4 flex gap-4 shadow-sm"
+                    className="bg-card border border-border rounded-2xl p-4 flex gap-4 shadow-card"
                   >
                     <img
                       src={item.images?.[0] || '/placeholder.jpg'}
                       alt={item.name}
-                      className="w-20 h-24 rounded-xl object-cover bg-silk"
+                      className="w-20 h-24 rounded-xl object-cover bg-darker"
                     />
                     <div className="flex-1 min-w-0">
                       <p className="text-xs text-gold-500 mb-1">{item.category?.name}</p>
-                      <h3 className="font-semibold text-ink text-sm mb-2 line-clamp-1">{item.name}</h3>
-                      <p className="font-bold">{item.price?.toLocaleString('fr-FR')} FCFA</p>
+                      <h3 className="font-semibold text-white text-sm mb-2 line-clamp-1">{item.name}</h3>
+                      <p className="font-bold text-gold-400">{item.price?.toLocaleString('fr-FR')} FCFA</p>
                       <div className="flex items-center gap-2 mt-3">
-                        <div className="flex items-center border border-gray-200 rounded-full text-sm">
+                        <div className="flex items-center border border-border rounded-full text-sm text-white">
                           <button onClick={() => item.qty > 1 ? updateQty(item._id, item.qty - 1) : remove(item._id)}
-                                  className="px-3 py-1 hover:bg-gray-50 rounded-l-full transition-colors">−</button>
+                                  className="px-3 py-1 hover:bg-border rounded-l-full transition-colors">−</button>
                           <span className="px-3 font-medium">{item.qty}</span>
                           <button onClick={() => updateQty(item._id, item.qty + 1)}
-                                  className="px-3 py-1 hover:bg-gray-50 rounded-r-full transition-colors">+</button>
+                                  className="px-3 py-1 hover:bg-border rounded-r-full transition-colors">+</button>
                         </div>
                         <button onClick={() => remove(item._id)}
                                 className="text-red-400 hover:text-red-600 transition-colors ml-auto">
@@ -76,7 +76,7 @@ export default function Cart() {
                         </button>
                       </div>
                     </div>
-                    <div className="text-right font-bold text-ink">
+                    <div className="text-right font-bold text-white">
                       {(item.price * item.qty).toLocaleString('fr-FR')} FCFA
                     </div>
                   </motion.div>
@@ -85,7 +85,7 @@ export default function Cart() {
             </div>
 
             {/* Summary */}
-            <div className="bg-ink text-white rounded-2xl p-6 h-fit sticky top-28">
+            <div className="bg-card border border-border text-white rounded-2xl p-6 h-fit sticky top-28 shadow-card">
               <h2 className="font-display text-xl font-bold mb-6">Récapitulatif</h2>
               <div className="space-y-3 text-sm mb-6">
                 <div className="flex justify-between">

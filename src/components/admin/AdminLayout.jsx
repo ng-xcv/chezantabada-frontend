@@ -1,7 +1,7 @@
 import { Link, Outlet, useLocation, useNavigate } from 'react-router-dom'
 import { motion } from 'framer-motion'
 import {
-  FiGrid, FiPackage, FiTag, FiShoppingBag,
+  FiGrid, FiPackage, FiTag, FiLayers, FiShoppingBag,
   FiLogOut, FiMenu, FiX
 } from 'react-icons/fi'
 import { useState } from 'react'
@@ -11,6 +11,7 @@ const NAV = [
   { to: '/admin',            icon: FiGrid,        label: 'Dashboard'   },
   { to: '/admin/produits',   icon: FiPackage,     label: 'Produits'    },
   { to: '/admin/categories', icon: FiTag,         label: 'Catégories'  },
+  { to: '/admin/collections',icon: FiLayers,      label: 'Collections' },
   { to: '/admin/commandes',  icon: FiShoppingBag, label: 'Commandes'   },
 ]
 

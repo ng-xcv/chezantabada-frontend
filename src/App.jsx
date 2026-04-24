@@ -15,6 +15,7 @@ import Orders from '@/pages/Orders'
 import AdminDashboard from '@/pages/admin/Dashboard'
 import AdminProducts from '@/pages/admin/Products'
 import AdminCategories from '@/pages/admin/Categories'
+import AdminCollections from '@/pages/admin/Collections'
 import AdminOrders from '@/pages/admin/AdminOrders'
 import ProtectedRoute from '@/components/ProtectedRoute'
 import AdminRoute from '@/components/AdminRoute'
@@ -45,6 +46,7 @@ export default function App() {
               <Route path="/admin" element={<AdminDashboard />} />
               <Route path="/admin/produits" element={<AdminProducts />} />
               <Route path="/admin/categories" element={<AdminCategories />} />
+              <Route path="/admin/collections" element={<AdminCollections />} />
               <Route path="/admin/commandes" element={<AdminOrders />} />
             </Route>
           </Route>
